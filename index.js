@@ -1,17 +1,14 @@
 const chalk = require('chalk')
-
 const fs = require('fs')
-
 const { google } = require('googleapis')
-
 const { Client, Collection, Intents, MessageEmbed } = require('discord.js')
-
 const { loadEvents } = require('./src/handlers/loadEvents')
-
 const { loadSlashCommands } = require('./src/handlers/loadSlashCommands')
+require('dotenv').config()
 
-const { botToken, spreadsheetId } = require('./src/jsons/config.json')
-
+//const { botToken, spreadsheetId } = require('./src/jsons/config.json')
+const BOT_TOKEN = process.env.BOT_TOKEN
+const SPREADSHEET_ID = process.env.SPREADSHEET_ID
 
 
 // Declaring our Discord Client
@@ -60,7 +57,7 @@ client.slash = new Collection()
 
 client.auth = auth
 
-client.sheetId = spreadsheetId
+client.sheetId = SPREADSHEET_ID
 
 client.googleSheets = googleSheets.spreadsheets
 
@@ -130,7 +127,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
   
 
-client.login(botToken).then(() => {
+client.login(BOT_TOKEN).then(() => {
 
 	console.log(
 
