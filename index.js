@@ -6,10 +6,7 @@ const { loadEvents } = require('./src/handlers/loadEvents')
 const { loadSlashCommands } = require('./src/handlers/loadSlashCommands')
 require('dotenv').config()
 
-//const { botToken, spreadsheetId } = require('./src/jsons/config.json')
-const BOT_TOKEN = process.env.BOT_TOKEN
-const SPREADSHEET_ID = process.env.SPREADSHEET_ID
-
+const { botToken, spreadsheetId } = require('./src/configs/config.js')
 
 // Declaring our Discord Client
 
@@ -37,7 +34,7 @@ const client = new Client({
 
 const auth = new google.auth.GoogleAuth({
 
-	keyFile: 'src/jsons/credentials.json',
+	keyFile: 'src/configs/credentials.js',
 
 	scopes: 'https://www.googleapis.com/auth/spreadsheets'
 
@@ -57,7 +54,7 @@ client.slash = new Collection()
 
 client.auth = auth
 
-client.sheetId = SPREADSHEET_ID
+client.sheetId = spreadsheetId
 
 client.googleSheets = googleSheets.spreadsheets
 
@@ -96,22 +93,8 @@ process.on('uncaughtException', (err) => {
   
 
 process.on('unhandledRejection', (reason, promise) => {
-
-	console.log(
-
-	  '[FATAL] Possibly Unhandled Rejection at: Promise ',
-
-	  promise,
-
-	  ' reason: ',
-
-	  reason.message
-
-	)
-
-  
-
-	 const rejectionembed = new MessageEmbed()
+	console.log('[FATAL] Possibly Unhandled Rejection at: Promise ', promise, ' reason: ', reason.message)
+	const rejectionembed = new MessageEmbed()
 
 		.setTitle('Unhandled Promise Rejection')
 
@@ -127,7 +110,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
   
 
-client.login(BOT_TOKEN).then(() => {
+client.login(botToken).then(() => {
 
 	console.log(
 
